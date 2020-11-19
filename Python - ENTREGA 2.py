@@ -6,12 +6,12 @@ import os
 from pathlib import Path
 
 angulosFormacoesRochosas = [30, 45, 60] #Vetor contendo o angulo de cada formação rochosa
-passo = 15
+passo = 15 #Deve ser um mdc de acordo com os ângulos (Passo em graus do braço robótico)
 
 w = 1  # Define a frequência em segundos do feedback
 x = len(angulosFormacoesRochosas)  # Quantidade de formações rochosas
-y = 50  # Define a distância da base até as formações rochosas
-z = 5  # Define a velocidade em metros por segundo m/s
+y = 500  # Define a distância da base até as formações rochosas (distância e velocidade devem ser múltiplos)
+z = 5  # Define a velocidade em metros por segundo m/s (distância e velocidade devem ser múltiplos)
 
 
 def desenhar(anguloCotovelo, larguraL1, anguloBroca, larguraL2, registro):
@@ -57,9 +57,10 @@ for i in range(len(angulosFormacoesRochosas)):
     localizacaoAtual = 0
     print(divisionLine)
     while localizacaoAtual < y:
+        distancia_ = y - localizacaoAtual
         if count == w:
             count = 0
-            print('Distância até as formações rochosas : {} metros | Velocidade : {}m/s'.format(str(y - localizacaoAtual), str(z)))
+            print('Distância até as formações rochosas : {} metros | Velocidade : {}m/s | Previsão : {}'.format(str(distancia_), str(z), round(((distancia_/z)/60), 2)))
         localizacaoAtual += z
         time.sleep(1)
         count += 1
@@ -86,9 +87,13 @@ for i in range(len(angulosFormacoesRochosas)):
     print('Voltando para a base ...')
     print(divisionLine)
     while localizacaoAtual > 0:
-        print('Distância até a base : {} metros | Velocidade : {}m/s'.format(str(localizacaoAtual), str(z)))
+        if count == w:
+            count = 0
+            print('Distância até a base : {} metros | Velocidade : {}m/s | Previsão : {}'.format(str(localizacaoAtual), str(z), round(((localizacaoAtual/z)/60), 2)))
         localizacaoAtual -= z
         time.sleep(1)
+        count += 1
+    count = 1
     localizacaoAtual = 0
     print('Distância até a base : {} metros | Velocidade : {}m/s'.format(str(localizacaoAtual), str(z)))
     posicaoDescanso = [90, -45]
