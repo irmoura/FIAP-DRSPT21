@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 angulosFormacoesRochosas = [30, 45, 60] #Vetor contendo o angulo de cada formação rochosa
-passo = 5
+passo = 15
 
 w = 1  # Define a frequência em segundos do feedback
 x = len(angulosFormacoesRochosas)  # Quantidade de formações rochosas
@@ -46,14 +46,16 @@ def desenhar(anguloCotovelo, larguraL1, anguloBroca, larguraL2, registro):
 
 posicaoDescanso = [90, -45] #Ângulo padrão de descanso, Cotovelo e broca respectivamente
 count = 0
+divisionLine = '\033[31m------------------------------------------------------------------------------\033[m'
 
 for i in range(len(angulosFormacoesRochosas)):
-    print('\033[31m------------------------------------------------------------------------------\033[m')
+    print(divisionLine)
     startTime = datetime.now().strftime("%H:%M:%S")
     print('Início da missão {} : {}'.format(str(i+1), str(startTime)))
+    desenhar(posicaoDescanso[0], 5, posicaoDescanso[1], 5, str(datetime.now().strftime("%H%M%S")))
     print('Posição de descanso - Cotovelo: {}° Broca: {}°'.format(str(posicaoDescanso[0]), str(posicaoDescanso[1])))
     localizacaoAtual = 0
-    print('\033[31m------------------------------------------------------------------------------\033[m')
+    print(divisionLine)
     while localizacaoAtual < y:
         if count == w:
             count = 0
@@ -65,8 +67,8 @@ for i in range(len(angulosFormacoesRochosas)):
     if(localizacaoAtual > y):
         localizacaoAtual = y
     print('Distância até as formações rochosas : {}'.format(str(y - localizacaoAtual)))
-    print('\033[31m------------------------------------------------------------------------------\033[m')
-    print('Posicionando o braço robótico na formação rochosa {} | Ângulo: {}'.format(str(i+1), str(angulosFormacoesRochosas[i])))
+    print(divisionLine)
+    print('Posicionando o braço robótico na formação rochosa {} | Ângulo: {}°'.format(str(i+1), str(angulosFormacoesRochosas[i])))
     posicaoAtual = posicaoDescanso
     print('Cotovelo: {}° | Broca: {}°'.format(str(posicaoAtual[0]), str(posicaoAtual[1])))
     while posicaoAtual[0] > angulosFormacoesRochosas[i] or posicaoAtual[1] < angulosFormacoesRochosas[i]:
@@ -82,7 +84,7 @@ for i in range(len(angulosFormacoesRochosas)):
     count = 1
     print('Iniciando retirada de amostras ...')
     print('Voltando para a base ...')
-    print('\033[31m------------------------------------------------------------------------------\033[m')
+    print(divisionLine)
     while localizacaoAtual > 0:
         print('Distância até a base : {} metros | Velocidade : {}m/s'.format(str(localizacaoAtual), str(z)))
         localizacaoAtual -= z
