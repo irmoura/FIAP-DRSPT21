@@ -80,6 +80,7 @@ for i in range(len(angulosFormacoesRochosas)):
         if count == w:
             count = 0
             print('Cotovelo: {}° | Broca: {}°'.format(str(posicaoAtual[0]), str(posicaoAtual[1])))
+            desenhar(posicaoAtual[0], 5, posicaoAtual[1], 5, str(datetime.now().strftime("%H%M%S")))#Cria um gráfico a cada mudança do braço robótico
         time.sleep(1)
         count += 1
     count = 1
@@ -97,4 +98,5 @@ for i in range(len(angulosFormacoesRochosas)):
     localizacaoAtual = 0
     print('Distância até a base : {} metros | Velocidade : {}m/s'.format(str(localizacaoAtual), str(z)))
     posicaoDescanso = [90, -45]
+desenhar(posicaoDescanso[0], 5, posicaoDescanso[1], 5, str(datetime.now().strftime("%H%M%S")))#cria o último gráfico de descanso
 print('Congragulations mission complete')
